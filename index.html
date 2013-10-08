@@ -3,67 +3,66 @@
 <link href='http://fonts.googleapis.com/css?family=Miltonian' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript" charset="utf-8"
-	src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+        src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
 
 <script>
-
 $(function() {
-	// ***
-	// Scrolling background.  FROM http://youloveus.co.uk <3 U
-	// ***
+    // ***
+    // Scrolling background.  FROM http://youloveus.co.uk <3 U
+    // ***
 
-	// height of background image in pixels
-	var backgroundheight = 4000;
+    // height of background image in pixels
+    var backgroundheight = 4000;
 
-	// get the current minute/hour of the day
-	var now = new Date();
-	var hour = now.getHours();
-	var minute = now.getMinutes();
-	
-	// work out how far through the day we are as a percentage - e.g. 6pm = 75%
-	var hourpercent = hour / 24 * 100;
-	var minutepercent = minute / 60 / 24 * 100;
-	var percentofday = Math.round(hourpercent + minutepercent);
+    // get the current minute/hour of the day
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
 
-	// calculate which pixel row to start graphic from based
-	// on how far through the day we are
-	var offset = backgroundheight / 100 * percentofday;
+    // work out how far through the day we are as a percentage - e.g. 6pm = 75%
+    var hourpercent = hour / 24 * 100;
+    var minutepercent = minute / 60 / 24 * 100;
+    var percentofday = Math.round(hourpercent + minutepercent);
 
-	// graphic starts at approx 6am, so adjust offset by 1/4
-	var offset = offset - (backgroundheight / 4);
+    // calculate which pixel row to start graphic from based
+    // on how far through the day we are
+    var offset = backgroundheight / 100 * percentofday;
 
-	function scrollbackground() {
-	    // decrease the offset by 1, or if its less than 1 increase it by
-	    // the background height minus 1
+    // graphic starts at approx 6am, so adjust offset by 1/4
+    var offset = offset - (backgroundheight / 4);
 
-	    offset = (offset < 1) ? offset + (backgroundheight - 1) :
-		offset - 1;
-	    // apply the background position
-	    $('body').css("background-position", "50%" + offset + "px");
-	    // call self to continue animation
-	    setTimeout(function() { scrollbackground(); }, 50);
-	}
+    function scrollbackground() {
+        // decrease the offset by 1, or if its less than 1 increase it by
+        // the background height minus 1
 
-	// Start the animation
-	scrollbackground();
+        offset = (offset < 1) ? offset + (backgroundheight - 1) :
+            offset - 1;
+        // apply the background position
+        $('body').css("background-position", "50%" + offset + "px");
+        // call self to continue animation
+        setTimeout(function() { scrollbackground(); }, 50);
+    }
 
-	function selectRandomVideo() {
-	    var videos = ["a.ogg", "b.ogg", "c.ogg"];
-	    var selectedVideo = videos[Math.floor(Math.random() * videos.length)];
-	    var video = document.getElementById('video');
-	    video.setAttribute("src", selectedVideo);
-	}
-	
-	selectRandomVideo();
+    // Start the animation
+    scrollbackground();
 
-    var video = document.getElementById('video');
-    video.addEventListener('ended', selectRandomVideo, false);
-    video.addEventListener('loadedmetadata',
-                           function() {
+    selectRandomVideo();
+
+    function selectRandomVideo() {
+        console.log("selectRandomVideo");
+        var videos = ["a.ogg", "b.ogg", "c.ogg", "d.ogg", "e.ogg"];
+	var selectedVideo = videos[Math.floor(Math.random() * videos.length)];
+
+        var video = document.getElementById('video');
+        video.setAttribute("src", selectedVideo);
+        video.addEventListener('ended', selectRandomVideo, false);
+        video.addEventListener('loadedmetadata',
+                               function() {
                                    var degree = 60 + ((Math.random() * 360) % 60) + ((video.videoWidth < video.videoHeight) ? 90 : 0);
                                    video.setAttribute("style", "-moz-transform:rotate(" + degree + "deg);");
                                }, false);
-    });
+        }
+});
 
 </script>
 <style>
@@ -103,10 +102,10 @@ The Amazing Dancing
 
 <div id="player" style="text-align:center">
 <p>
-<video id="video" width="640" height="480" autoplay="true" loop="true">
+<video id="video" width="640" height="480" autoplay="true">
   <source src="" type="video/ogg" />
   Your browser does not support the awesomeness that is the mfinkle.
-</video> 
+</video>
 </div>
 </div>
 
